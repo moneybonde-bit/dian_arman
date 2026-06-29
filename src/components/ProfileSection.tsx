@@ -133,8 +133,12 @@ export const ProfileSection: React.FC = () => {
             className="flex flex-col items-center text-center bg-brand-cream-100/30 p-6 rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/20 transition-colors duration-300 shadow-sm relative"
           >
             {/* Portrait Framed */}
-            <div className="relative w-40 h-52 mb-6 rounded-t-full overflow-hidden border-2 border-brand-gold-500 shadow-md">
-              <img
+            <div className="relative w-40 h-52 mb-6 rounded-t-full overflow-hidden border-2 border-brand-gold-500 shadow-md bg-brand-cream-200">
+              <motion.img
+                initial={prefersReducedMotion ? {} : { scale: 1.15, filter: 'blur(6px)' }}
+                whileInView={prefersReducedMotion ? {} : { scale: 1, filter: 'blur(0px)' }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.6, ease: [0.25, 1, 0.5, 1] }}
                 src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400"
                 alt={BRIDE_GROOM.groom.fullName}
                 className="w-full h-full object-cover select-none"
@@ -172,8 +176,12 @@ export const ProfileSection: React.FC = () => {
             className="flex flex-col items-center text-center bg-brand-cream-100/30 p-6 rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/20 transition-colors duration-300 shadow-sm relative"
           >
             {/* Portrait Framed */}
-            <div className="relative w-40 h-52 mb-6 rounded-t-full overflow-hidden border-2 border-brand-gold-500 shadow-md">
-              <img
+            <div className="relative w-40 h-52 mb-6 rounded-t-full overflow-hidden border-2 border-brand-gold-500 shadow-md bg-brand-cream-200">
+              <motion.img
+                initial={prefersReducedMotion ? {} : { scale: 1.15, filter: 'blur(6px)' }}
+                whileInView={prefersReducedMotion ? {} : { scale: 1, filter: 'blur(0px)' }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.6, ease: [0.25, 1, 0.5, 1] }}
                 src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400"
                 alt={BRIDE_GROOM.bride.fullName}
                 className="w-full h-full object-cover select-none"
