@@ -248,6 +248,19 @@ export const ClosingSection: React.FC = () => {
         <p className="text-[10px] text-brand-burgundy-500/50 uppercase tracking-widest mt-8 font-semibold">
           Arman & Dian • 25.07.2026
         </p>
+
+        {/* Luxavian Studio Copyright Footer */}
+        <motion.div
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 0.35, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1], delay: 0.15 }}
+          className="mt-14 pb-12 flex flex-col items-center justify-center select-none"
+        >
+          <p className="text-[11px] font-sans tracking-[0.18em] uppercase text-brand-burgundy-950 font-semibold">
+            © Luxavian Studio
+          </p>
+        </motion.div>
       </div>
     </section>
   );
