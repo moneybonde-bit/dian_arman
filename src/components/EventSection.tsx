@@ -4,6 +4,7 @@ import { Calendar, Clock, MapPin, ExternalLink, CalendarPlus } from 'lucide-reac
 import { EVENTS } from '../data';
 import { DiamondDivider, CornerOrnament } from './Ornament';
 import { Tilt } from './Tilt';
+import { Countdown } from './Countdown';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 export const EventSection: React.FC = () => {
@@ -39,13 +40,24 @@ export const EventSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="text-center mb-16"
+          className="text-center mb-6"
         >
           <p className="text-xs uppercase tracking-[0.2em] font-serif font-bold text-brand-terracotta-600 mb-2">
             Waktu & Tempat
           </p>
           <h2 className="text-3xl font-display text-brand-burgundy-800">Detail Acara</h2>
           <div className="w-12 h-1 bg-brand-gold-500 mx-auto mt-3" />
+        </motion.div>
+
+        {/* Cinematic Glowing Countdown */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, delay: 0.1 }}
+          className="w-full mb-16"
+        >
+          <Countdown />
         </motion.div>
 
         {/* Event Cards Grid */}
