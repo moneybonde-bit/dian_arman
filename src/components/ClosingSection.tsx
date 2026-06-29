@@ -252,13 +252,21 @@ export const ClosingSection: React.FC = () => {
         {/* Luxavian Studio Copyright Footer */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 0.35, y: 0 }}
+          whileInView={{ opacity: 0.40, y: 0 }}
+          whileHover={{ opacity: 0.85 }}
           viewport={{ once: true }}
           transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1], delay: 0.15 }}
-          className="mt-14 pb-12 flex flex-col items-center justify-center select-none"
+          className="mt-14 pb-12 flex flex-col items-center justify-center select-none transition-opacity duration-300"
         >
-          <p className="text-[11px] font-sans tracking-[0.18em] uppercase text-brand-burgundy-950 font-semibold">
-            © Luxavian Studio
+          <p className="text-[11px] font-sans tracking-[0.18em] uppercase text-brand-burgundy-950 font-bold">
+            © <a 
+                href="https://luxavian-studio.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-brand-gold-600 transition-all duration-300 hover:underline underline-offset-4 decoration-brand-gold-500"
+              >
+                Luxavian Studio
+              </a>
           </p>
         </motion.div>
       </div>
