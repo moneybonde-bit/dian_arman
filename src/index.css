@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-serif: "Cinzel", serif;
+
+  --color-brand-terracotta-50: #F7F3EF;
+  --color-brand-terracotta-100: #EBE1D6;
+  --color-brand-terracotta-200: #DACCBB;
+  --color-brand-terracotta-300: #C4B09A;
+  --color-brand-terracotta-400: #A88D71;
+  --color-brand-terracotta-500: #8C7052;
+  --color-brand-terracotta-600: #735A40;
+  --color-brand-terracotta-700: #5C4731;
+  --color-brand-terracotta-800: #453524;
+  --color-brand-terracotta-900: #302418;
+
+  --color-brand-burgundy-50: #F9EBEB;
+  --color-brand-burgundy-100: #F0CDCD;
+  --color-brand-burgundy-200: #E2A6A6;
+  --color-brand-burgundy-300: #CF7A7B;
+  --color-brand-burgundy-400: #B74D50;
+  --color-brand-burgundy-500: #991F24;
+  --color-brand-burgundy-600: #7A171B;
+  --color-brand-burgundy-700: #5C1013;
+  --color-brand-burgundy-800: #420A0D;
+  --color-brand-burgundy-900: #260506;
+
+  --color-brand-gold-100: #FFFDF0;
+  --color-brand-gold-200: #FEF6D1;
+  --color-brand-gold-300: #FDE8A3;
+  --color-brand-gold-400: #FAD46B;
+  --color-brand-gold-500: #E5B824;
+  --color-brand-gold-600: #BF9517;
+  --color-brand-gold-700: #99750E;
+  --color-brand-gold-800: #735708;
+  --color-brand-gold-900: #4D3904;
+
+  --color-brand-cream-50: #F9F6F0;
+  --color-brand-cream-100: #EFEADF;
+  --color-brand-cream-200: #E2DAC9;
+  --color-brand-cream-300: #D1C5B0;
+  --color-brand-cream-warm: #FCFAF5;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-cream-50);
+    color: var(--color-brand-burgundy-900);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+}
+
+/* Custom modern adat scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-brand-cream-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-terracotta-400);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-burgundy-500);
+}
+

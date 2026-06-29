@@ -1,0 +1,6 @@
+{
+  "name": "Undangan Arman & Dian",
+  "description": "Undangan Pernikahan Digital Elegan Modern Adat untuk Arman & Dian",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
