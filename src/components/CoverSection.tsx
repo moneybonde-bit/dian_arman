@@ -131,7 +131,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                   opacity: { duration: 1.4, ease: 'easeInOut' },
                   scale: { duration: 8, ease: 'linear' },
                 }}
-                className="absolute inset-0 w-full h-full object-cover object-top select-none pointer-events-none"
+                className="absolute inset-0 w-full h-full object-cover object-center select-none pointer-events-none"
                 referrerPolicy="no-referrer"
                 draggable={false}
               />
