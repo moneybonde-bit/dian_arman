@@ -24,8 +24,56 @@ export const ProfileSection: React.FC = () => {
     })
   };
 
+  const groomVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: prefersReducedMotion ? 0 : -60, 
+      y: prefersReducedMotion ? 0 : 30,
+      rotate: prefersReducedMotion ? 0 : -4,
+      scale: 0.92 
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotate: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 60,
+        damping: 12,
+        mass: 0.8,
+        delay: prefersReducedMotion ? 0 : 0.1
+      }
+    }
+  };
+
+  const brideVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: prefersReducedMotion ? 0 : 60, 
+      y: prefersReducedMotion ? 0 : 30,
+      rotate: prefersReducedMotion ? 0 : 4,
+      scale: 0.92 
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      rotate: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 60,
+        damping: 12,
+        mass: 0.8,
+        delay: prefersReducedMotion ? 0 : 0.2
+      }
+    }
+  };
+
   return (
-    <section id="mempelai" className="relative py-20 px-6 max-w-4xl mx-auto flex flex-col items-center">
+    <section id="mempelai" className="relative py-20 px-6 max-w-4xl mx-auto flex flex-col items-center overflow-hidden md:overflow-visible">
       {/* Delicate background motif */}
       <div className="absolute top-10 left-10 opacity-5 pointer-events-none text-brand-terracotta-500">
         <EthnicMandala size={120} />
@@ -76,13 +124,12 @@ export const ProfileSection: React.FC = () => {
         </div>
 
         {/* Mempelai Pria */}
-        <Tilt className="flex flex-col relative w-full max-w-[280px]">
+        <Tilt className="flex flex-col relative mx-auto w-full max-w-[280px]">
           <motion.div
-            custom={3}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            variants={slideUpVariants}
+            variants={groomVariants}
             className="flex flex-col items-center text-center bg-brand-cream-100/30 p-6 rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/20 transition-colors duration-300 shadow-sm relative"
           >
             {/* Portrait Framed */}
@@ -116,13 +163,12 @@ export const ProfileSection: React.FC = () => {
         </Tilt>
 
         {/* Mempelai Wanita */}
-        <Tilt className="flex flex-col relative w-full max-w-[280px]">
+        <Tilt className="flex flex-col relative mx-auto w-full max-w-[280px]">
           <motion.div
-            custom={4}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.2 }}
-            variants={slideUpVariants}
+            variants={brideVariants}
             className="flex flex-col items-center text-center bg-brand-cream-100/30 p-6 rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/20 transition-colors duration-300 shadow-sm relative"
           >
             {/* Portrait Framed */}
