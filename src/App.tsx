@@ -27,13 +27,13 @@ export default function App() {
   // Handle invitation open state and body scroll locking
   const handleOpenInvitation = () => {
     setIsOpen(true);
-    // Smooth scroll to the content once unlocked
+    // Smooth scroll to the content once unlocked, timed perfectly with the premium sequence
     setTimeout(() => {
       const element = document.getElementById('main-invitation-content');
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100);
+    }, 450);
 
     // Play music immediately within the user-interaction click event stack
     if (musicRef.current) {
@@ -128,7 +128,13 @@ export default function App() {
 
           {/* 4. MAIN INVITATION SECTIONS */}
           {isOpen && (
-            <main id="main-invitation-content" className="w-full relative pb-24">
+            <motion.main
+              id="main-invitation-content"
+              initial={prefersReducedMotion ? {} : { opacity: 0, filter: 'blur(8px)', y: 40, scale: 0.98 }}
+              animate={prefersReducedMotion ? {} : { opacity: 1, filter: 'blur(0px)', y: 0, scale: 1 }}
+              transition={{ duration: 1.4, ease: [0.25, 1, 0.5, 1], delay: 0.1 }}
+              className="w-full relative pb-24"
+            >
               
               {/* Decorative Floating Frame Accent (Left/Right margins for large screens) */}
               <div className="hidden lg:block fixed left-6 top-1/2 -translate-y-1/2 z-20 text-brand-gold-700/35 uppercase tracking-[0.3em] font-serif text-[10px] [writing-mode:vertical-lr] select-none pointer-events-none">
@@ -241,7 +247,7 @@ export default function App() {
                   </motion.button>
                 )}
               </AnimatePresence>
-            </main>
+            </motion.main>
           )}
         </>
       )}
