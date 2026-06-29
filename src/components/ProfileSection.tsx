@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { Instagram } from 'lucide-react';
 import { BRIDE_GROOM, DOA_HARAPAN } from '../data';
 import { DiamondDivider, EthnicMandala, CornerOrnament } from './Ornament';
 import { Tilt } from './Tilt';
@@ -154,6 +155,15 @@ export const ProfileSection: React.FC = () => {
             <p className="text-sm font-serif italic font-medium text-brand-terracotta-600 mt-1">
               ({BRIDE_GROOM.groom.shortName})
             </p>
+            <a
+              href="https://instagram.com/armankanafkanaf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center gap-1.5 text-xs text-brand-burgundy-900/60 hover:text-brand-terracotta-600 transition-colors duration-300 font-medium group"
+            >
+              <Instagram size={14} className="text-brand-gold-500 group-hover:text-brand-terracotta-500 transition-colors duration-300" />
+              <span className="hover:underline">@armankanafkanaf</span>
+            </a>
 
             <div className="w-8 h-[1px] bg-brand-gold-500/60 my-3" />
 
@@ -197,6 +207,15 @@ export const ProfileSection: React.FC = () => {
             <p className="text-sm font-serif italic font-medium text-brand-terracotta-600 mt-1">
               ({BRIDE_GROOM.bride.shortName})
             </p>
+            <a
+              href="https://instagram.com/dianhzsharon"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 flex items-center gap-1.5 text-xs text-brand-burgundy-900/60 hover:text-brand-terracotta-600 transition-colors duration-300 font-medium group"
+            >
+              <Instagram size={14} className="text-brand-gold-500 group-hover:text-brand-terracotta-500 transition-colors duration-300" />
+              <span className="hover:underline">@dianhzsharon</span>
+            </a>
 
             <div className="w-8 h-[1px] bg-brand-gold-500/60 my-3" />
 
