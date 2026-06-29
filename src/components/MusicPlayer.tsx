@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
-import { motion } from 'motion/react';
-import { Volume2, VolumeX } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Volume2, VolumeX, Play, Music } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
 interface MusicPlayerProps {
@@ -89,44 +89,66 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle, MusicPlayerProps>(
           title={isPlaying ? "Matikan Musik" : "Putar Musik"}
           id="music-toggle-btn"
         >
-          {/* Animated Equalizer Waves */}
-          {isPlaying && !prefersReducedMotion ? (
-            <div className="flex items-end gap-[2px] h-3.5 w-4 pb-[1px]" aria-hidden="true">
-              <motion.span 
-                animate={{ height: [3, 14, 5, 12, 3] }} 
-                transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
-                className="w-[2.5px] bg-brand-terracotta-500 rounded-full origin-bottom" 
-              />
-              <motion.span 
-                animate={{ height: [5, 8, 14, 4, 5] }} 
-                transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut', delay: 0.25 }}
-                className="w-[2.5px] bg-brand-gold-500 rounded-full origin-bottom" 
-              />
-              <motion.span 
-                animate={{ height: [12, 4, 9, 14, 12] }} 
-                transition={{ duration: 1.0, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
-                className="w-[2.5px] bg-brand-terracotta-500 rounded-full origin-bottom" 
-              />
-              <motion.span 
-                animate={{ height: [4, 11, 3, 9, 4] }} 
-                transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-                className="w-[2.5px] bg-brand-burgundy-600 rounded-full origin-bottom" 
-              />
-            </div>
-          ) : (
-            <div className="relative flex items-center justify-center w-5 h-5">
+          <div className="w-5 h-5 flex items-center justify-center relative overflow-hidden">
+            <AnimatePresence mode="wait">
               {isPlaying ? (
-                <>
-                  <Volume2 size={18} className="text-brand-terracotta-500 z-10 animate-pulse" />
-                  {!prefersReducedMotion && (
-                    <span className="absolute inline-flex h-full w-full rounded-full bg-brand-gold-500/30 animate-ping opacity-75" />
-                  )}
-                </>
+                !prefersReducedMotion ? (
+                  <motion.div
+                    key="equalizer"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-end gap-[2.5px] h-3.5 w-4 pb-[1px]"
+                    aria-hidden="true"
+                  >
+                    <motion.span 
+                      animate={{ height: [3, 14, 5, 12, 3] }} 
+                      transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+                      className="w-[2px] bg-brand-terracotta-500 rounded-full origin-bottom" 
+                    />
+                    <motion.span 
+                      animate={{ height: [5, 8, 14, 4, 5] }} 
+                      transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut', delay: 0.25 }}
+                      className="w-[2px] bg-brand-gold-500 rounded-full origin-bottom" 
+                    />
+                    <motion.span 
+                      animate={{ height: [12, 4, 9, 14, 12] }} 
+                      transition={{ duration: 1.0, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
+                      className="w-[2px] bg-brand-terracotta-500 rounded-full origin-bottom" 
+                    />
+                    <motion.span 
+                      animate={{ height: [4, 11, 3, 9, 4] }} 
+                      transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+                      className="w-[2px] bg-brand-burgundy-600 rounded-full origin-bottom" 
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="playing-static"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.8 }}
+                    transition={{ duration: 0.2 }}
+                    className="relative flex items-center justify-center w-5 h-5"
+                  >
+                    <Volume2 size={18} className="text-brand-terracotta-500" />
+                  </motion.div>
+                )
               ) : (
-                <VolumeX size={18} className="text-brand-burgundy-900/60 z-10" />
+                <motion.div
+                  key="paused"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.2 }}
+                  className="relative flex items-center justify-center w-5 h-5"
+                >
+                  <Play size={16} className="text-brand-burgundy-900/80 fill-brand-burgundy-900/20" />
+                </motion.div>
               )}
-            </div>
-          )}
+            </AnimatePresence>
+          </div>
           
           {/* Subtle hover status text */}
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 text-[10px] font-bold uppercase tracking-widest text-brand-burgundy-900/80 whitespace-nowrap">
