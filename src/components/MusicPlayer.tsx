@@ -34,8 +34,22 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle, MusicPlayerProps>(
 
     const playMusic = () => {
       sendCommand('playVideo');
-      sendCommand('setVolume', [40]); // Gentle background volume
+      sendCommand('setVolume', [0]);
       setIsPlaying(true);
+
+      let currentVol = 0;
+      const targetVol = 40;
+      const step = 2; // Volume steps
+      const intervalTime = 45; // ms (gives ~900ms fade duration)
+
+      const fadeInterval = setInterval(() => {
+        currentVol += step;
+        if (currentVol >= targetVol) {
+          currentVol = targetVol;
+          clearInterval(fadeInterval);
+        }
+        sendCommand('setVolume', [currentVol]);
+      }, intervalTime);
     };
 
     const pauseMusic = () => {
