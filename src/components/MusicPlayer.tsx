@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
+import { motion } from 'motion/react';
 import { Volume2, VolumeX } from 'lucide-react';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 
@@ -84,25 +85,51 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle, MusicPlayerProps>(
 
         <button
           onClick={togglePlay}
-          className="flex items-center justify-center gap-2 bg-brand-cream-50/95 backdrop-blur-sm border border-brand-gold-500/30 text-brand-burgundy-800 p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group min-h-[44px] min-w-[44px] cursor-pointer"
+          className="flex items-center justify-center gap-2.5 bg-brand-cream-50/95 backdrop-blur-md border border-brand-gold-500/35 text-brand-burgundy-800 py-2.5 px-3.5 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group min-h-[44px] cursor-pointer"
           title={isPlaying ? "Matikan Musik" : "Putar Musik"}
           id="music-toggle-btn"
         >
-          <div className="relative flex items-center justify-center w-5 h-5">
-            {isPlaying ? (
-              <>
-                <Volume2 size={18} className="text-brand-terracotta-500 z-10" />
-                {!prefersReducedMotion && (
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-brand-gold-500/30 animate-ping opacity-75" />
-                )}
-              </>
-            ) : (
-              <VolumeX size={18} className="text-brand-burgundy-900/60 z-10" />
-            )}
-          </div>
+          {/* Animated Equalizer Waves */}
+          {isPlaying && !prefersReducedMotion ? (
+            <div className="flex items-end gap-[2px] h-3.5 w-4 pb-[1px]" aria-hidden="true">
+              <motion.span 
+                animate={{ height: [3, 14, 5, 12, 3] }} 
+                transition={{ duration: 1.2, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-[2.5px] bg-brand-terracotta-500 rounded-full origin-bottom" 
+              />
+              <motion.span 
+                animate={{ height: [5, 8, 14, 4, 5] }} 
+                transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut', delay: 0.25 }}
+                className="w-[2.5px] bg-brand-gold-500 rounded-full origin-bottom" 
+              />
+              <motion.span 
+                animate={{ height: [12, 4, 9, 14, 12] }} 
+                transition={{ duration: 1.0, repeat: Infinity, ease: 'easeInOut', delay: 0.1 }}
+                className="w-[2.5px] bg-brand-terracotta-500 rounded-full origin-bottom" 
+              />
+              <motion.span 
+                animate={{ height: [4, 11, 3, 9, 4] }} 
+                transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+                className="w-[2.5px] bg-brand-burgundy-600 rounded-full origin-bottom" 
+              />
+            </div>
+          ) : (
+            <div className="relative flex items-center justify-center w-5 h-5">
+              {isPlaying ? (
+                <>
+                  <Volume2 size={18} className="text-brand-terracotta-500 z-10 animate-pulse" />
+                  {!prefersReducedMotion && (
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-brand-gold-500/30 animate-ping opacity-75" />
+                  )}
+                </>
+              ) : (
+                <VolumeX size={18} className="text-brand-burgundy-900/60 z-10" />
+              )}
+            </div>
+          )}
           
           {/* Subtle hover status text */}
-          <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 text-[10px] font-bold uppercase tracking-wider text-brand-burgundy-900/80 whitespace-nowrap">
+          <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 text-[10px] font-bold uppercase tracking-widest text-brand-burgundy-900/80 whitespace-nowrap">
             {isPlaying ? 'Music On' : 'Music Off'}
           </span>
         </button>
