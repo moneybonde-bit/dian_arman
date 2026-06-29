@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MapPin, Image as ImageIcon, Heart, Users, BookOpen, ChevronUp, Gift, CalendarCheck } from 'lucide-react';
 import { CoverSection } from './components/CoverSection';
@@ -9,7 +9,7 @@ import { GallerySection } from './components/GallerySection';
 import { GiftSection } from './components/GiftSection';
 import { RsvpSection } from './components/RsvpSection';
 import { ClosingSection } from './components/ClosingSection';
-import { MusicPlayer } from './components/MusicPlayer';
+import { MusicPlayer, MusicPlayerHandle } from './components/MusicPlayer';
 import { FloatingParticles } from './components/FloatingParticles';
 import { usePrefersReducedMotion } from './hooks/usePrefersReducedMotion';
 
@@ -18,6 +18,7 @@ export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const musicRef = useRef<MusicPlayerHandle | null>(null);
 
   // Handle invitation open state and body scroll locking
   const handleOpenInvitation = () => {
@@ -29,6 +30,11 @@ export default function App() {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     }, 100);
+
+    // Play music immediately within the user-interaction click event stack
+    if (musicRef.current) {
+      musicRef.current.play();
+    }
   };
 
   useEffect(() => {
@@ -79,7 +85,7 @@ export default function App() {
       <CoverSection isOpen={isOpen} onOpen={handleOpenInvitation} />
 
       {/* 2. BACKGROUND MUSIC CONTROLLER (Starts playing once cover is opened) */}
-      <MusicPlayer autoStart={isOpen} />
+      <MusicPlayer ref={musicRef} autoStart={isOpen} />
 
       {/* 2.5 FLYING/MOVING PARTICLES (3D EFFECT BACKGROUND) */}
       {isOpen && <FloatingParticles />}
