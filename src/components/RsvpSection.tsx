@@ -25,6 +25,46 @@ const QUICK_WISHES_PRESETS = [
   "Selamat berbahagia! Kiranya menjadi berkat yang berkelimpahan untuk sesama. 🌸",
 ];
 
+const AnimatedCounter: React.FC<{ value: number }> = ({ value }) => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const end = value;
+    if (start === end) {
+      setCount(end);
+      return;
+    }
+
+    const duration = 1000; // ms
+    const startTime = performance.now();
+
+    let animationFrameId: number;
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out quad formula
+      const easeProgress = progress * (2 - progress);
+      
+      const currentCount = Math.round(end * easeProgress);
+      setCount(currentCount);
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(animate);
+      } else {
+        setCount(end);
+      }
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [value]);
+
+  return <span>{count}</span>;
+};
+
 export const RsvpSection: React.FC = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const [name, setName] = useState('');
@@ -36,6 +76,11 @@ export const RsvpSection: React.FC = () => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
+  const hadirCount = responses.filter(r => r.attendance === 'hadir').length;
+  const totalGuests = responses.filter(r => r.attendance === 'hadir').reduce((acc, r) => acc + (r.guestCount || 1), 0);
+  const absenCount = responses.filter(r => r.attendance === 'absen').length;
+  const raguCount = responses.filter(r => r.attendance === 'ragu').length;
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const initialOffset = prefersReducedMotion ? 0 : 25;
@@ -210,6 +255,89 @@ export const RsvpSection: React.FC = () => {
             Mohon kesediaan Bapak/Ibu/Saudara/i untuk mengonfirmasi kehadiran Anda pada acara pernikahan kami serta memberikan ucapan hangat.
           </p>
         </motion.div>
+
+        {/* RSVP Summary Panel */}
+        {responses.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.1 }}
+            className="w-full max-w-4xl mb-10"
+          >
+            <div className="bg-brand-cream-50/80 border border-brand-gold-500/25 backdrop-blur-md rounded-2xl p-5 md:p-6 shadow-sm relative overflow-hidden">
+              {/* Artistic subtle watermark */}
+              <div className="absolute -top-6 -right-6 p-4 opacity-10 pointer-events-none">
+                <EthnicMandala size={110} className="text-brand-gold-500" />
+              </div>
+              
+              <div className="relative z-10">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mb-5 pb-3 border-b border-brand-gold-500/15">
+                  <div className="text-center sm:text-left">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-brand-terracotta-600">Statistik Kehadiran</p>
+                    <h3 className="text-sm font-display font-bold text-brand-burgundy-800 uppercase tracking-wider">
+                      RSVP Summary Board
+                    </h3>
+                  </div>
+                  <div className="bg-brand-cream-100/70 border border-brand-gold-500/15 rounded-full px-4 py-1 text-[11px] font-bold text-brand-burgundy-900 tracking-wide flex items-center gap-1.5 shadow-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-terracotta-500 animate-pulse" />
+                    <span>Sudah <AnimatedCounter value={responses.length} /> kerabat memberikan konfirmasi</span>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {/* Card Hadir */}
+                  <div className="bg-brand-cream-50 border border-brand-gold-500/15 rounded-xl p-4 flex items-start gap-3 transition-all duration-300 hover:border-brand-gold-500/30 shadow-xs hover:shadow-sm">
+                    <div className="p-2.5 bg-emerald-500/10 border border-emerald-500/10 rounded-full text-emerald-600 flex-shrink-0">
+                      <Users size={16} />
+                    </div>
+                    <div className="space-y-0.5">
+                      <p className="text-[9px] uppercase font-bold tracking-widest text-brand-burgundy-950/40">👥 Hadir</p>
+                      <h4 className="text-base font-display font-extrabold text-brand-burgundy-950">
+                        <AnimatedCounter value={hadirCount} /> <span className="text-[10px] font-bold text-brand-burgundy-950/50 uppercase">Konfirmasi</span>
+                      </h4>
+                      <p className="text-[11px] font-bold text-emerald-700/90 tracking-wide">
+                        Total <AnimatedCounter value={totalGuests} /> Tamu (Pax)
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Card Absen */}
+                  <div className="bg-brand-cream-50 border border-brand-gold-500/15 rounded-xl p-4 flex items-start gap-3 transition-all duration-300 hover:border-brand-gold-500/30 shadow-xs hover:shadow-sm">
+                    <div className="p-2.5 bg-rose-500/10 border border-rose-500/10 rounded-full text-rose-600 flex-shrink-0 flex items-center justify-center w-9 h-9">
+                      <span className="font-serif font-extrabold text-xs leading-none">✕</span>
+                    </div>
+                    <div className="space-y-0.5">
+                      <p className="text-[9px] uppercase font-bold tracking-widest text-brand-burgundy-950/40">✕ Absen</p>
+                      <h4 className="text-base font-display font-extrabold text-brand-burgundy-950">
+                        <AnimatedCounter value={absenCount} /> <span className="text-[10px] font-bold text-brand-burgundy-950/50 uppercase">Tamu</span>
+                      </h4>
+                      <p className="text-[11px] font-bold text-rose-700/90 tracking-wide">
+                        Berhalangan Hadir
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Card Ragu-ragu */}
+                  <div className="bg-brand-cream-50 border border-brand-gold-500/15 rounded-xl p-4 flex items-start gap-3 transition-all duration-300 hover:border-brand-gold-500/30 shadow-xs hover:shadow-sm">
+                    <div className="p-2.5 bg-amber-500/10 border border-amber-500/10 rounded-full text-amber-600 flex-shrink-0 flex items-center justify-center w-9 h-9">
+                      <span className="font-sans font-extrabold text-xs leading-none">❓</span>
+                    </div>
+                    <div className="space-y-0.5">
+                      <p className="text-[9px] uppercase font-bold tracking-widest text-brand-burgundy-950/40">🤔 Ragu-Ragu</p>
+                      <h4 className="text-base font-display font-extrabold text-brand-burgundy-950">
+                        <AnimatedCounter value={raguCount} /> <span className="text-[10px] font-bold text-brand-burgundy-950/50 uppercase">Tamu</span>
+                      </h4>
+                      <p className="text-[11px] font-bold text-amber-700/90 tracking-wide">
+                        Menunggu Kepastian
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full items-start max-w-4xl">
           
