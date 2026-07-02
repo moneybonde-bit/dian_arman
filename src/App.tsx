@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { MapPin, Image as ImageIcon, Heart, Users, BookOpen, ChevronUp, Gift, CalendarCheck } from 'lucide-react';
 import { LoadingScreen } from './components/LoadingScreen';
 import { CoverSection } from './components/CoverSection';
+import { HeroSection } from './components/HeroSection';
 import { ProfileSection } from './components/ProfileSection';
 import { EventSection } from './components/EventSection';
 import { BibleVerseSection } from './components/BibleVerseSection';
@@ -72,16 +73,8 @@ export default function App() {
         setShowScrollTop(false);
       }
 
-      // Hide bottom nav when scrolling down past 120px, show when scrolling up
-      if (scrollTop > 120) {
-        if (scrollTop > lastScrollY.current) {
-          setShowBottomNav(false);
-        } else {
-          setShowBottomNav(true);
-        }
-      } else {
-        setShowBottomNav(true);
-      }
+      // Bottom nav is always stable and stand by since opened
+      setShowBottomNav(true);
       
       lastScrollY.current = scrollTop;
     };
@@ -143,6 +136,9 @@ export default function App() {
               <div className="hidden lg:block fixed right-6 top-1/2 -translate-y-1/2 z-20 text-brand-gold-700/35 uppercase tracking-[0.3em] font-serif text-[10px] [writing-mode:vertical-lr] select-none rotate-180 pointer-events-none">
                 GKST JEMAAT IMANUEL PARIGI
               </div>
+
+              {/* Hero Section - Full Screen First Fold */}
+              <HeroSection />
 
               {/* Section 1: Bride & Groom Profiles */}
               <ProfileSection />
