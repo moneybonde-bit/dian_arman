@@ -10,12 +10,14 @@ export const BRIDE_GROOM = {
     shortName: 'Arman',
     parents: 'Bpk. Felipus Kanaf & Ibu Frida A.B.T Baok',
     childOf: 'Anak ke-4',
+    photo: 'https://lh3.googleusercontent.com/d/1m23EH1xrtytUjmfpZ1R2wgfZybmR7Ph3',
   },
   bride: {
     fullName: 'Dian Hezedila Sharon',
     shortName: 'Dian',
     parents: 'Alm. Bpk. I Wayan Wismayasa & Ibu Elim Sia Wasti Tehampa',
     childOf: 'Anak ke-2',
+    photo: 'https://lh3.googleusercontent.com/d/1hG1JyT9Hse_JJoVpfl-pIJGTiL3ctBZ5',
   },
 };
 
@@ -55,7 +57,7 @@ export const FAMILIES: FamilyGroup[] = [
     side: 'groom',
     title: 'Keluarga Besar Mempelai Pria',
     names: [
-      'Kel. Kanaf - Baok',
+      'Kel. Kanaf-Baok',
       'Kel. Neno - Nenoharan',
       'Kel. Pdt. Noh Ruku',
       'Kel. Masriani Ruthi Tiara Lina Siregar'
