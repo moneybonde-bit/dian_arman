@@ -37,6 +37,12 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle, MusicPlayerProps>(
       sendCommand('setVolume', [0]);
       setIsPlaying(true);
 
+      // Robust retries for mobile devices/slower networks where iframe takes a few ms to initialize
+      setTimeout(() => sendCommand('playVideo'), 300);
+      setTimeout(() => sendCommand('playVideo'), 800);
+      setTimeout(() => sendCommand('playVideo'), 1500);
+      setTimeout(() => sendCommand('playVideo'), 2500);
+
       let currentVol = 0;
       const targetVol = 40;
       const step = 2; // Volume steps

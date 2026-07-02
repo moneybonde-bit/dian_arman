@@ -55,10 +55,8 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
   const handleOpenClick = () => {
     if (isOpening) return;
     setIsOpening(true);
-    // Introduce tactile spring delay & ripple feedback before trigger
-    setTimeout(() => {
-      onOpen();
-    }, 350);
+    // Play music synchronously first to bypass browser autoplay blocks
+    onOpen();
   };
 
   // Names kinetic typography split into characters for stagger animation

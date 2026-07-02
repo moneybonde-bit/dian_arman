@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MapPin, Image as ImageIcon, Heart, Users, BookOpen, ChevronUp, Gift, CalendarCheck } from 'lucide-react';
+import { MapPin, Image as ImageIcon, Heart, Users, BookOpen, ChevronUp, Gift, CalendarCheck, Play, Pause } from 'lucide-react';
 import { LoadingScreen } from './components/LoadingScreen';
 import { CoverSection } from './components/CoverSection';
 import { HeroSection } from './components/HeroSection';
@@ -23,6 +23,66 @@ export default function App() {
   const [showBottomNav, setShowBottomNav] = useState(true);
   const prefersReducedMotion = usePrefersReducedMotion();
   const musicRef = useRef<MusicPlayerHandle | null>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(false);
+  const autoScrollRef = useRef<number | null>(null);
+
+  // Smooth Auto scroll loop
+  useEffect(() => {
+    if (isAutoScrolling && isOpen) {
+      let lastTime = performance.now();
+      const scrollSpeed = 0.035; // Gentle, beautifully easy-to-read slow scroll speed
+
+      const scrollStep = (now: number) => {
+        const delta = now - lastTime;
+        lastTime = now;
+        
+        const currentScroll = window.scrollY;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        
+        if (currentScroll >= maxScroll - 1) {
+          setIsAutoScrolling(false);
+        } else {
+          window.scrollBy(0, scrollSpeed * delta);
+          autoScrollRef.current = requestAnimationFrame(scrollStep);
+        }
+      };
+
+      autoScrollRef.current = requestAnimationFrame(scrollStep);
+    } else {
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current);
+        autoScrollRef.current = null;
+      }
+    }
+
+    return () => {
+      if (autoScrollRef.current) {
+        cancelAnimationFrame(autoScrollRef.current);
+      }
+    };
+  }, [isAutoScrolling, isOpen]);
+
+  // Pause auto scrolling when user interacts manually to prevent scroll fighting
+  useEffect(() => {
+    if (!isAutoScrolling) return;
+
+    const handleUserInteraction = () => {
+      setIsAutoScrolling(false);
+    };
+
+    window.addEventListener('wheel', handleUserInteraction, { passive: true });
+    window.addEventListener('touchmove', handleUserInteraction, { passive: true });
+    window.addEventListener('mousedown', handleUserInteraction, { passive: true });
+    window.addEventListener('keydown', handleUserInteraction, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', handleUserInteraction);
+      window.removeEventListener('touchmove', handleUserInteraction);
+      window.removeEventListener('mousedown', handleUserInteraction);
+      window.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, [isAutoScrolling]);
+
   const lastScrollY = useRef(0);
 
   // Handle invitation open state and body scroll locking
@@ -105,6 +165,57 @@ export default function App() {
 
           {/* 2. BACKGROUND MUSIC CONTROLLER (Starts playing once cover is opened) */}
           <MusicPlayer ref={musicRef} autoStart={isOpen} />
+
+          {/* 2.2 AUTO SCROLL TOGGLE (Starts once cover is opened) */}
+          {isOpen && (
+            <div className="fixed top-[74px] right-4 z-40">
+              <button
+                onClick={() => setIsAutoScrolling(!isAutoScrolling)}
+                className={`flex items-center justify-center gap-2.5 bg-brand-cream-50/95 backdrop-blur-md border ${
+                  isAutoScrolling 
+                    ? 'border-brand-gold-500 bg-brand-burgundy-950 text-brand-gold-400 shadow-[0_0_15px_rgba(212,175,55,0.4)]' 
+                    : 'border-brand-gold-500/35 text-brand-burgundy-800'
+                } py-2 px-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group min-h-[44px] cursor-pointer`}
+                title={isAutoScrolling ? "Hentikan Scroll Otomatis" : "Mulai Scroll Otomatis"}
+                id="auto-scroll-toggle-btn"
+              >
+                <div className="w-5 h-5 flex items-center justify-center relative">
+                  {isAutoScrolling ? (
+                    <motion.div
+                      animate={{
+                        y: [0, 3, 0]
+                      }}
+                      transition={{
+                        duration: 1.2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="text-brand-gold-400"
+                    >
+                      <Pause size={14} />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.15, 1],
+                      }}
+                      transition={{
+                        duration: 1.8,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                      className="text-brand-terracotta-500"
+                    >
+                      <Play size={14} className="ml-[1px]" />
+                    </motion.div>
+                  )}
+                </div>
+                <span className="text-[11px] font-bold uppercase tracking-wider pr-1">
+                  {isAutoScrolling ? "Pause Scroll" : "Auto Scroll"}
+                </span>
+              </button>
+            </div>
+          )}
 
           {/* 2.5 FLYING/MOVING PARTICLES (3D EFFECT BACKGROUND) */}
           {isOpen && <FloatingParticles />}
