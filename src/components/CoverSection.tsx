@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MailOpen, Heart, Volume2, VolumeX } from 'lucide-react';
+import { MailOpen, Heart, Volume2, VolumeX, Sparkles, Star } from 'lucide-react';
 import { EthnicMandala } from './Ornament';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { HERO_IMAGES } from '../data';
@@ -9,6 +9,15 @@ interface CoverSectionProps {
   onOpen: () => void;
   isOpen: boolean;
 }
+
+const NEON_ICONS = [
+  { Icon: Heart, x: '8%', y: '18%', size: 24, color: 'text-rose-500', delay: 0 },
+  { Icon: Sparkles, x: '85%', y: '12%', size: 20, color: 'text-brand-gold-300', delay: 1 },
+  { Icon: Heart, x: '82%', y: '72%', size: 28, color: 'text-rose-500', delay: 1.5 },
+  { Icon: Sparkles, x: '12%', y: '78%', size: 22, color: 'text-brand-gold-300', delay: 0.5 },
+  { Icon: Star, x: '6%', y: '42%', size: 16, color: 'text-yellow-400', delay: 2 },
+  { Icon: Star, x: '90%', y: '48%', size: 18, color: 'text-yellow-400', delay: 0.8 }
+];
 
 export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) => {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -90,10 +99,41 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                 referrerPolicy="no-referrer"
               />
             </AnimatePresence>
-            {/* Dark gradient overlays to make text readable and mask out the baked-in text in the reference image */}
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="absolute inset-0 bg-gradient-to-b from-brand-burgundy-950 via-transparent to-black/90" />
-            <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-[#1a0a0c] to-transparent opacity-90" />
+            {/* Soft, beautiful bright overlays to make the couple portrait fully visible and vibrant */}
+            <div className="absolute inset-0 bg-black/15" />
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-950/80 via-transparent to-brand-burgundy-950/40" />
+            
+            {/* A glowing golden neon border frame around the screen */}
+            <div className="absolute inset-3 border border-brand-gold-500/30 rounded-2xl pointer-events-none z-10 shadow-[0_0_15px_rgba(229,184,36,0.15)_inset]" />
+            <div className="absolute inset-4 border border-brand-gold-500/10 rounded-xl pointer-events-none z-10" />
+
+            {/* Floating Interactive Neon Icons */}
+            <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
+              {NEON_ICONS.map((item, idx) => {
+                const IconComponent = item.Icon;
+                return (
+                  <motion.div
+                    key={idx}
+                    style={{ left: item.x, top: item.y }}
+                    className={`absolute ${item.color} neon-glow-gold opacity-75`}
+                    animate={{
+                      y: [0, -15, 0],
+                      scale: [1, 1.15, 1],
+                      rotate: [0, 10, -10, 0],
+                      opacity: [0.5, 0.9, 0.5]
+                    }}
+                    transition={{
+                      duration: 4 + idx,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: item.delay
+                    }}
+                  >
+                    <IconComponent size={item.size} />
+                  </motion.div>
+                );
+              })}
+            </div>
           </motion.div>
 
           {/* Background delicate mandala pattern - dimmed for dark theme */}
@@ -159,9 +199,9 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
               </div>
             )}
 
-            {/* Kinetic Typography - Name Reveal */}
+            {/* Kinetic Typography - Name Reveal with metallic shine & neon glow */}
             <div className="flex flex-col items-center justify-center drop-shadow-2xl mt-4">
-              <div className="flex overflow-hidden">
+              <div className="flex overflow-hidden py-1">
                 {titleGroom.map((char, index) => (
                   <motion.span
                     key={`g-${index}`}
@@ -172,7 +212,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                       duration: 0.6,
                       ease: 'easeOut',
                     }}
-                    className="text-6xl md:text-7xl lg:text-8xl font-display text-brand-gold-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]"
+                    className="text-6xl md:text-7xl lg:text-8xl font-display font-extrabold metallic-shine select-none"
                   >
                     {char}
                   </motion.span>
@@ -182,11 +222,11 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                 initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 transition={{ delay: 1.4, type: 'spring', stiffness: 80 }}
-                className="text-4xl md:text-5xl font-display text-brand-terracotta-400 my-2 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+                className="text-4xl md:text-5xl font-display font-bold text-brand-gold-300 neon-glow-text my-2 animate-pulse-neon select-none"
               >
                 &
               </motion.span>
-              <div className="flex overflow-hidden">
+              <div className="flex overflow-hidden py-1">
                 {titleBride.map((char, index) => (
                   <motion.span
                     key={`b-${index}`}
@@ -197,7 +237,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                       duration: 0.6,
                       ease: 'easeOut',
                     }}
-                    className="text-6xl md:text-7xl lg:text-8xl font-display text-brand-gold-300 drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]"
+                    className="text-6xl md:text-7xl lg:text-8xl font-display font-extrabold metallic-shine select-none"
                   >
                     {char}
                   </motion.span>
