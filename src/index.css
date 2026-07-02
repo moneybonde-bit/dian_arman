@@ -69,3 +69,62 @@
   background: var(--color-brand-burgundy-500);
 }
 
+/* Metallic gold shining text effect */
+@keyframes goldShine {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.metallic-shine {
+  background: linear-gradient(
+    to right,
+    #bf9517 0%,
+    #fde8a3 20%,
+    #fad46b 40%,
+    #fffdf0 50%,
+    #fad46b 60%,
+    #fde8a3 80%,
+    #bf9517 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: goldShine 5s linear infinite;
+  filter: drop-shadow(0 2px 8px rgba(191, 149, 23, 0.45));
+}
+
+.neon-glow-gold {
+  filter: drop-shadow(0 0 8px rgba(229, 184, 36, 0.7)) drop-shadow(0 0 15px rgba(229, 184, 36, 0.4));
+}
+
+.neon-glow-burgundy {
+  filter: drop-shadow(0 0 10px rgba(153, 31, 36, 0.8)) drop-shadow(0 0 20px rgba(153, 31, 36, 0.5));
+}
+
+.neon-glow-text {
+  text-shadow: 0 0 5px rgba(254, 246, 209, 0.8), 0 0 12px rgba(229, 184, 36, 0.6);
+}
+
+@keyframes pulseNeon {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+    filter: drop-shadow(0 0 5px rgba(229, 184, 36, 0.5));
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 15px rgba(229, 184, 36, 0.9));
+  }
+}
+
+.animate-pulse-neon {
+  animation: pulseNeon 3s ease-in-out infinite;
+}
+
+
