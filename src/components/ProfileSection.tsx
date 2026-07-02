@@ -134,19 +134,44 @@ export const ProfileSection: React.FC = () => {
             className="flex flex-col items-center text-center bg-brand-cream-100/30 p-6 rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/20 transition-colors duration-300 shadow-sm relative"
           >
             {/* Portrait Framed */}
-            <div className="relative w-40 h-52 mb-6 rounded-t-full overflow-hidden border-2 border-brand-gold-500 shadow-md bg-brand-cream-200">
-              <motion.img
-                initial={prefersReducedMotion ? {} : { scale: 1.15, filter: 'blur(6px)' }}
-                whileInView={prefersReducedMotion ? {} : { scale: 1, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.6, ease: [0.25, 1, 0.5, 1] }}
-                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400"
-                alt={BRIDE_GROOM.groom.fullName}
-                className="w-full h-full object-cover select-none"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-900/20 to-transparent" />
+            <div className="relative mb-6 flex items-center justify-center">
+              {/* Spinning decorative background mandala for a majestic effect */}
+              <div className="absolute -inset-8 opacity-[0.12] pointer-events-none text-brand-gold-600 animate-spin [animation-duration:60s] select-none">
+                <EthnicMandala size={220} />
+              </div>
+              
+              {/* Outer Golden Medallion Arch */}
+              <div className="relative p-2 rounded-t-full bg-gradient-to-b from-brand-gold-500/30 via-brand-gold-500/10 to-transparent shadow-lg border border-brand-gold-500/30">
+                
+                {/* Middle border ring */}
+                <div className="p-1 rounded-t-full bg-brand-cream-50/80 border border-brand-gold-500/20">
+                  
+                  {/* Photo Wrapper */}
+                  <div className="relative w-44 h-60 rounded-t-full overflow-hidden border-2 border-brand-gold-500 shadow-inner bg-brand-cream-200">
+                    <motion.img
+                      initial={prefersReducedMotion ? {} : { scale: 1.15, filter: 'blur(6px)' }}
+                      whileInView={prefersReducedMotion ? {} : { scale: 1, filter: 'blur(0px)' }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.6, ease: [0.25, 1, 0.5, 1] }}
+                      src={BRIDE_GROOM.groom.photo}
+                      alt={BRIDE_GROOM.groom.fullName}
+                      className="w-full h-full object-cover select-none"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-950/35 via-transparent to-transparent" />
+                    
+                    {/* Subtle ethnic pattern overlay on photo */}
+                    <div className="absolute inset-0 bg-[radial-gradient(#b34b32_1px,transparent_1px)] opacity-[0.03] pointer-events-none [background-size:12px_12px]" />
+                  </div>
+                  
+                </div>
+                
+                {/* Traditional Corner Leaf Accent Marks on the outer arch */}
+                <div className="absolute -top-1 -left-1 w-2.5 h-2.5 bg-brand-gold-500 rotate-45 rounded-sm border border-brand-cream-50" />
+                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-gold-500 rotate-45 rounded-sm border border-brand-cream-50" />
+                
+              </div>
             </div>
 
             <h3 className="text-2xl font-display font-semibold text-brand-burgundy-800">
@@ -186,19 +211,44 @@ export const ProfileSection: React.FC = () => {
             className="flex flex-col items-center text-center bg-brand-cream-100/30 p-6 rounded-2xl border border-brand-gold-500/10 hover:border-brand-gold-500/20 transition-colors duration-300 shadow-sm relative"
           >
             {/* Portrait Framed */}
-            <div className="relative w-40 h-52 mb-6 rounded-t-full overflow-hidden border-2 border-brand-gold-500 shadow-md bg-brand-cream-200">
-              <motion.img
-                initial={prefersReducedMotion ? {} : { scale: 1.15, filter: 'blur(6px)' }}
-                whileInView={prefersReducedMotion ? {} : { scale: 1, filter: 'blur(0px)' }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.6, ease: [0.25, 1, 0.5, 1] }}
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=400"
-                alt={BRIDE_GROOM.bride.fullName}
-                className="w-full h-full object-cover select-none"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-900/20 to-transparent" />
+            <div className="relative mb-6 flex items-center justify-center">
+              {/* Spinning decorative background mandala for a majestic effect */}
+              <div className="absolute -inset-8 opacity-[0.12] pointer-events-none text-brand-gold-600 animate-spin [animation-duration:60s] select-none">
+                <EthnicMandala size={220} />
+              </div>
+              
+              {/* Outer Golden Medallion Arch */}
+              <div className="relative p-2 rounded-t-full bg-gradient-to-b from-brand-gold-500/30 via-brand-gold-500/10 to-transparent shadow-lg border border-brand-gold-500/30">
+                
+                {/* Middle border ring */}
+                <div className="p-1 rounded-t-full bg-brand-cream-50/80 border border-brand-gold-500/20">
+                  
+                  {/* Photo Wrapper */}
+                  <div className="relative w-44 h-60 rounded-t-full overflow-hidden border-2 border-brand-gold-500 shadow-inner bg-brand-cream-200">
+                    <motion.img
+                      initial={prefersReducedMotion ? {} : { scale: 1.15, filter: 'blur(6px)' }}
+                      whileInView={prefersReducedMotion ? {} : { scale: 1, filter: 'blur(0px)' }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.6, ease: [0.25, 1, 0.5, 1] }}
+                      src={BRIDE_GROOM.bride.photo}
+                      alt={BRIDE_GROOM.bride.fullName}
+                      className="w-full h-full object-cover select-none"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-950/35 via-transparent to-transparent" />
+                    
+                    {/* Subtle ethnic pattern overlay on photo */}
+                    <div className="absolute inset-0 bg-[radial-gradient(#b34b32_1px,transparent_1px)] opacity-[0.03] pointer-events-none [background-size:12px_12px]" />
+                  </div>
+                  
+                </div>
+                
+                {/* Traditional Corner Leaf Accent Marks on the outer arch */}
+                <div className="absolute -top-1 -left-1 w-2.5 h-2.5 bg-brand-gold-500 rotate-45 rounded-sm border border-brand-cream-50" />
+                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-brand-gold-500 rotate-45 rounded-sm border border-brand-cream-50" />
+                
+              </div>
             </div>
 
             <h3 className="text-2xl font-display font-semibold text-brand-burgundy-800">
