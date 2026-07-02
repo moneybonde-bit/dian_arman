@@ -20,16 +20,10 @@ export const GiftSection: React.FC = () => {
 
   const accounts: GiftAccount[] = [
     {
-      bankName: 'Bank BCA',
-      accountNumber: '6495112234',
-      recipientName: 'Arman Kanaf',
+      bankName: 'Bank BRI',
+      accountNumber: '4676 0105 6209 536',
+      recipientName: 'ARMAN KANAF',
       logoColor: 'from-[#005CA9] to-[#003B75]'
-    },
-    {
-      bankName: 'Bank Mandiri',
-      accountNumber: '1370019283746',
-      recipientName: 'Dian Hezedila Sharon',
-      logoColor: 'from-[#003D79] to-[#F1A100]'
     }
   ];
 
@@ -162,7 +156,7 @@ export const GiftSection: React.FC = () => {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="bg-brand-cream-100/60 rounded-2xl border border-brand-gold-500/15 p-6 relative flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 md:col-span-2 max-w-xl mx-auto w-full text-left overflow-hidden"
+                  className="bg-brand-cream-100/60 rounded-2xl border border-brand-gold-500/15 p-6 relative flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 w-full text-left overflow-hidden"
                 >
                   <CornerOrnament />
 
