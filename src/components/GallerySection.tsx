@@ -12,7 +12,7 @@ export const GallerySection: React.FC = () => {
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
 
   // Filter items by category
-  const categories = ['Semua', 'Momen Bersama', 'Sesi Pranikah', 'Detail Indah'];
+  const categories = ['Semua', 'Momen Bersama', 'Adat Bada', 'Adat Bali', 'Adat Timor Amarasi'];
   
   const filteredItems = selectedCategory === 'Semua' 
     ? GALLERY_ITEMS 
@@ -90,7 +90,7 @@ export const GallerySection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, delay: 0.15, ease: 'easeOut' }}
-          className="flex flex-wrap justify-center gap-2 mb-10 w-full max-w-xl"
+          className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-10 w-full max-w-4xl mx-auto px-4"
         >
           {categories.map(category => (
             <button
@@ -99,13 +99,28 @@ export const GallerySection: React.FC = () => {
                 setSelectedCategory(category);
                 setVisibleCount(8); // Reset count on filter change
               }}
-              className={`text-xs md:text-sm font-semibold tracking-wide px-4 py-2 rounded-full border transition-all duration-300 cursor-pointer min-h-[40px] ${
-                selectedCategory === category
-                  ? 'bg-gradient-to-r from-brand-terracotta-500 to-brand-burgundy-600 text-brand-cream-50 border-transparent shadow-md'
-                  : 'bg-brand-cream-50 text-brand-burgundy-800 border-brand-gold-500/15 hover:border-brand-gold-500/30'
+              className={`relative text-[11px] md:text-xs font-bold tracking-widest py-3 rounded-xl border-0 transition-all duration-300 cursor-pointer h-12 flex items-center justify-center overflow-hidden w-full select-none ${
+                category === 'Semua' ? 'col-span-2 md:col-span-1' : 'col-span-1'
               }`}
             >
-              {category}
+              {/* Animated sliding background pill */}
+              {selectedCategory === category && (
+                <motion.div
+                  layoutId="activeCategoryPill"
+                  transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                  className="absolute inset-0 bg-gradient-to-r from-brand-terracotta-500 to-brand-burgundy-600 shadow-md"
+                />
+              )}
+              <span className={`relative z-10 transition-colors duration-300 font-extrabold uppercase text-center px-1 leading-tight ${
+                selectedCategory === category ? 'text-brand-cream-50' : 'text-brand-burgundy-800'
+              }`}>
+                {category}
+              </span>
+              
+              {/* Subtle light border depending on active state */}
+              <span className={`absolute inset-0 border rounded-xl pointer-events-none transition-colors duration-300 ${
+                selectedCategory === category ? 'border-transparent' : 'border-brand-gold-500/25'
+              }`} />
             </button>
           ))}
         </motion.div>
