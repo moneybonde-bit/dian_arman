@@ -1,20 +1,32 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Undangan Pernikahan — Arman & Dian
 
-# Run and deploy your AI Studio app
+Undangan pernikahan digital untuk Arman Kanaf & Dian Hezedila Sharon,
+25 Juli 2026 di Parigi Moutong, Sulawesi Tengah.
 
-This contains everything you need to run your app locally.
+Live: https://dian-arman.luxavian.it.com
 
-View your app in AI Studio: https://ai.studio/apps/d85582e0-8f0d-492f-95cc-3269e953a1e6
+## Stack
 
-## Run Locally
+- React 19 + TypeScript + Vite
+- Tailwind CSS 4
+- Motion (Framer Motion) untuk animasi
+- Cloudflare Workers (static assets) untuk hosting
 
-**Prerequisites:**  Node.js
+## Development
 
+```bash
+npm install
+npm run dev
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Buka http://localhost:3000.
+
+## Deploy
+
+Push ke `main` → auto-deploy ke Cloudflare Workers. Detail lengkap:
+[DEPLOYMENT.md](./DEPLOYMENT.md).
+
+## Struktur konten
+
+Semua data yang bisa diedit klien ada di [`src/data.ts`](./src/data.ts):
+nama, tanggal, acara, gallery, gift info, verse, doa.
