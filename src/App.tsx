@@ -167,7 +167,7 @@ export default function App() {
 
           {/* 2.2 AUTO SCROLL TOGGLE (Starts once cover is opened) */}
           {isOpen && (
-            <div className="fixed top-[74px] right-4 z-40">
+            <div className="fixed top-[calc(74px+env(safe-area-inset-top))] right-4 z-40">
               <button
                 onClick={() => setIsAutoScrolling(!isAutoScrolling)}
                 className={`flex items-center justify-center gap-2.5 bg-brand-cream-50/95 backdrop-blur-md border ${
@@ -276,7 +276,7 @@ export default function App() {
                     animate={{ y: 0, opacity: 1, x: '-50%' }}
                     exit={{ y: 80, opacity: 0, x: '-50%' }}
                     transition={{ type: 'spring', stiffness: 280, damping: 25 }}
-                    className="fixed bottom-4 left-1/2 z-30 w-[94%] max-w-lg bg-brand-cream-50/90 backdrop-blur-md border border-brand-gold-500/25 rounded-2xl shadow-xl py-2 px-1 flex justify-around items-center"
+                    className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-1/2 z-30 w-[94%] max-w-lg bg-brand-cream-50/90 backdrop-blur-md border border-brand-gold-500/25 rounded-2xl shadow-xl py-2 px-1 flex justify-around items-center"
                   >
                     {/* Mempelai */}
                     <button
@@ -334,7 +334,7 @@ export default function App() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                    className="fixed bottom-20 right-4 z-30 p-3 rounded-full bg-brand-burgundy-700 hover:bg-brand-burgundy-800 text-brand-cream-50 shadow-lg cursor-pointer border border-brand-gold-500/20 transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
+                    className="fixed bottom-[calc(5rem+env(safe-area-inset-bottom))] right-4 z-30 p-3 rounded-full bg-brand-burgundy-700 hover:bg-brand-burgundy-800 text-brand-cream-50 shadow-lg cursor-pointer border border-brand-gold-500/20 transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
                     aria-label="Scroll to top"
                   >
                     <ChevronUp size={20} className="text-brand-gold-300" />
