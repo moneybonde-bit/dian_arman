@@ -9,6 +9,7 @@ import { EventSection } from './components/EventSection';
 import { BibleVerseSection } from './components/BibleVerseSection';
 import { GallerySection } from './components/GallerySection';
 import { RsvpSection } from './components/RsvpSection';
+import { GiftSection } from './components/GiftSection';
 import { ClosingSection } from './components/ClosingSection';
 import { MusicPlayer, MusicPlayerHandle } from './components/MusicPlayer';
 import { FloatingParticles } from './components/FloatingParticles';
@@ -264,6 +265,9 @@ export default function App() {
 
               {/* Section 6: RSVP Attendance Form & Wishes Board */}
               <RsvpSection />
+
+              {/* Section 6.5: Digital Gift / Kado Digital */}
+              <GiftSection />
 
               {/* Section 7: Closing Greetings & Family Names */}
               <ClosingSection />
