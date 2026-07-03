@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MapPin, Image as ImageIcon, Heart, Users, BookOpen, ChevronUp, Gift, CalendarCheck, Play, Pause } from 'lucide-react';
+import { MapPin, Image as ImageIcon, Heart, Users, BookOpen, ChevronUp, CalendarCheck, Play, Pause } from 'lucide-react';
 import { LoadingScreen } from './components/LoadingScreen';
 import { CoverSection } from './components/CoverSection';
 import { HeroSection } from './components/HeroSection';
@@ -8,7 +8,6 @@ import { ProfileSection } from './components/ProfileSection';
 import { EventSection } from './components/EventSection';
 import { BibleVerseSection } from './components/BibleVerseSection';
 import { GallerySection } from './components/GallerySection';
-import { GiftSection } from './components/GiftSection';
 import { RsvpSection } from './components/RsvpSection';
 import { ClosingSection } from './components/ClosingSection';
 import { MusicPlayer, MusicPlayerHandle } from './components/MusicPlayer';
@@ -263,9 +262,6 @@ export default function App() {
               {/* Section 4: Photo Gallery with Lightbox */}
               <GallerySection />
 
-              {/* Section 5: Digital Wedding Gift */}
-              <GiftSection />
-
               {/* Section 6: RSVP Attendance Form & Wishes Board */}
               <RsvpSection />
 
@@ -307,15 +303,6 @@ export default function App() {
                     >
                       <ImageIcon size={16} className="text-brand-terracotta-500" />
                       <span className="text-[9px] font-bold uppercase tracking-wider block sm:inline">Galeri</span>
-                    </button>
-
-                    {/* Hadiah */}
-                    <button
-                      onClick={() => scrollToSection('hadiah')}
-                      className="flex flex-col items-center gap-0.5 text-brand-burgundy-900/70 hover:text-brand-terracotta-600 cursor-pointer transition-colors p-1 flex-1"
-                    >
-                      <Gift size={16} className="text-brand-terracotta-500" />
-                      <span className="text-[9px] font-bold uppercase tracking-wider block sm:inline">Kado</span>
                     </button>
 
                     {/* RSVP */}
