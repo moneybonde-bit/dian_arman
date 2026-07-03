@@ -51,8 +51,8 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
   };
 
   // Names kinetic typography split into characters for stagger animation
-  const titleGroom = "Arman".split("");
-  const titleBride = "Dian".split("");
+  const titleGroom = ['A', 'r', 'm', 'a', 'n'];
+  const titleBride = ['D', 'i', 'a', 'n'];
 
   return (
     <AnimatePresence>
