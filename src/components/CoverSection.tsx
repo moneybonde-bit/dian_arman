@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MailOpen, Heart, Volume2, VolumeX, Sparkles, Star } from 'lucide-react';
+import { MailOpen } from 'lucide-react';
 import { EthnicMandala } from './Ornament';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 import { HERO_IMAGES } from '../data';
@@ -9,15 +9,6 @@ interface CoverSectionProps {
   onOpen: () => void;
   isOpen: boolean;
 }
-
-const NEON_ICONS = [
-  { Icon: Heart, x: '8%', y: '18%', size: 24, color: 'text-rose-500', delay: 0 },
-  { Icon: Sparkles, x: '85%', y: '12%', size: 20, color: 'text-brand-gold-300', delay: 1 },
-  { Icon: Heart, x: '82%', y: '72%', size: 28, color: 'text-rose-500', delay: 1.5 },
-  { Icon: Sparkles, x: '12%', y: '78%', size: 22, color: 'text-brand-gold-300', delay: 0.5 },
-  { Icon: Star, x: '6%', y: '42%', size: 16, color: 'text-yellow-400', delay: 2 },
-  { Icon: Star, x: '90%', y: '48%', size: 18, color: 'text-yellow-400', delay: 0.8 }
-];
 
 export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) => {
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -68,7 +59,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
       {!isOpen && (
         <motion.div
           id="cover-screen"
-          className="fixed inset-0 z-50 flex flex-col items-center justify-between text-center overflow-hidden bg-brand-burgundy-900"
+          className="fixed inset-0 h-[100dvh] max-h-[100dvh] z-50 flex flex-col items-center justify-between text-center overflow-hidden bg-brand-burgundy-900"
           initial={{ y: 0 }}
           exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, transition: { duration: 1.5, ease: [0.25, 1, 0.5, 1] } }}
         >
@@ -101,37 +92,9 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
             <div className="absolute inset-0 bg-black/15" />
             <div className="absolute inset-0 bg-gradient-to-t from-brand-burgundy-950/80 via-transparent to-brand-burgundy-950/40" />
             
-            {/* A glowing golden neon border frame around the screen */}
-            <div className="absolute inset-3 border border-brand-gold-500/30 rounded-2xl pointer-events-none z-10 shadow-[0_0_15px_rgba(229,184,36,0.15)_inset]" />
-            <div className="absolute inset-4 border border-brand-gold-500/10 rounded-xl pointer-events-none z-10" />
-
-            {/* Floating Interactive Neon Icons */}
-            <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none">
-              {NEON_ICONS.map((item, idx) => {
-                const IconComponent = item.Icon;
-                return (
-                  <motion.div
-                    key={idx}
-                    style={{ left: item.x, top: item.y }}
-                    className={`absolute ${item.color} neon-glow-gold opacity-75`}
-                    animate={{
-                      y: [0, -15, 0],
-                      scale: [1, 1.15, 1],
-                      rotate: [0, 10, -10, 0],
-                      opacity: [0.5, 0.9, 0.5]
-                    }}
-                    transition={{
-                      duration: 4 + idx,
-                      repeat: Infinity,
-                      ease: 'easeInOut',
-                      delay: item.delay
-                    }}
-                  >
-                    <IconComponent size={item.size} />
-                  </motion.div>
-                );
-              })}
-            </div>
+            {/* Glowing golden neon border frame around the screen */}
+            <div className="absolute inset-2 sm:inset-3 border border-brand-gold-500/30 rounded-2xl pointer-events-none z-10 shadow-[0_0_15px_rgba(229,184,36,0.15)_inset]" />
+            <div className="absolute inset-3 sm:inset-4 border border-brand-gold-500/10 rounded-xl pointer-events-none z-10" />
           </motion.div>
 
           {/* Background delicate mandala pattern - dimmed for dark theme */}
@@ -146,21 +109,21 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
           {/* Section 1: Top Branding */}
           <motion.div 
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -25, transition: { duration: 1.1, ease: [0.25, 1, 0.5, 1] } }}
-            className="pt-16 px-4 z-10 w-full"
+            className="pt-6 sm:pt-12 px-4 z-10 w-full"
           >
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="flex justify-center mb-4 opacity-80"
+              className="flex justify-center mb-2 sm:mb-4 opacity-80"
             >
-              <EthnicMandala size={40} className="text-brand-gold-400" />
+              <EthnicMandala size={32} className="text-brand-gold-400 sm:size-[40px]" />
             </motion.div>
             <motion.p
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 1 }}
-              className="text-sm md:text-base uppercase font-serif font-semibold text-brand-gold-400 tracking-[0.25em] drop-shadow-md mb-1"
+              className="text-xs sm:text-sm md:text-base uppercase font-serif font-semibold text-brand-gold-400 tracking-[0.25em] drop-shadow-md mb-0.5 sm:mb-1"
             >
               UNDANGAN
             </motion.p>
@@ -168,7 +131,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 1 }}
-              className="text-sm md:text-base uppercase font-serif font-semibold text-brand-gold-400 tracking-[0.25em] drop-shadow-md"
+              className="text-xs sm:text-sm md:text-base uppercase font-serif font-semibold text-brand-gold-400 tracking-[0.25em] drop-shadow-md"
             >
               PERNIKAHAN
             </motion.p>
@@ -177,11 +140,11 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
           {/* Section 2: Couple Name */}
           <motion.div 
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -35, scale: 0.96, transition: { duration: 1.3, ease: [0.25, 1, 0.5, 1] } }}
-            className="my-auto py-8 px-4 z-10 flex flex-col items-center w-full"
+            className="my-auto py-2 sm:py-6 px-4 z-10 flex flex-col items-center w-full"
           >
             {/* Carousel Dot Indicators */}
             {HERO_IMAGES.length > 1 && (
-              <div className="flex justify-center gap-2 mb-6 z-10">
+              <div className="flex justify-center gap-2 mb-3 sm:mb-6 z-10">
                 {HERO_IMAGES.map((_, idx) => (
                   <button
                     key={idx}
@@ -198,7 +161,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
             )}
 
             {/* Kinetic Typography - Name Reveal with metallic shine & neon glow */}
-            <div className="flex flex-col items-center justify-center drop-shadow-2xl mt-4">
+            <div className="flex flex-col items-center justify-center drop-shadow-2xl mt-2 sm:mt-4">
               <div className="flex overflow-hidden py-1">
                 {titleGroom.map((char, index) => (
                   <motion.span
@@ -210,7 +173,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                       duration: 0.6,
                       ease: 'easeOut',
                     }}
-                    className="text-6xl md:text-7xl lg:text-8xl font-display font-extrabold metallic-shine select-none"
+                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-extrabold metallic-shine select-none"
                   >
                     {char}
                   </motion.span>
@@ -220,7 +183,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                 initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 transition={{ delay: 1.4, type: 'spring', stiffness: 80 }}
-                className="text-4xl md:text-5xl font-display font-bold text-brand-gold-300 neon-glow-text my-2 animate-pulse-neon select-none"
+                className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-brand-gold-300 neon-glow-text my-1 sm:my-2 animate-pulse-neon select-none"
               >
                 &
               </motion.span>
@@ -235,7 +198,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                       duration: 0.6,
                       ease: 'easeOut',
                     }}
-                    className="text-6xl md:text-7xl lg:text-8xl font-display font-extrabold metallic-shine select-none"
+                    className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-extrabold metallic-shine select-none"
                   >
                     {char}
                   </motion.span>
@@ -247,14 +210,14 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.6 }}
               transition={{ delay: 2.2, duration: 0.8 }}
-              className="w-20 h-[1px] bg-brand-gold-500/80 my-6"
+              className="w-16 sm:w-20 h-[1px] bg-brand-gold-500/80 my-3 sm:my-6"
             />
             
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.9 }}
               transition={{ delay: 2.3, duration: 0.8 }}
-              className="text-sm tracking-[0.2em] font-semibold font-serif text-brand-cream-100 drop-shadow-md"
+              className="text-xs sm:text-sm tracking-[0.2em] font-semibold font-serif text-brand-cream-100 drop-shadow-md"
             >
               25 JULI 2026
             </motion.p>
@@ -263,13 +226,13 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
           {/* Section 3: Guest Box & Open Button */}
           <motion.div 
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 30, transition: { duration: 1.1, ease: [0.25, 1, 0.5, 1] } }}
-            className="pb-12 px-6 z-10 w-full max-w-sm flex flex-col items-center"
+            className="pb-6 sm:pb-12 px-6 z-10 w-full max-w-sm flex flex-col items-center"
           >
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 2.5, duration: 0.8 }}
-              className="bg-black/30 backdrop-blur-md border border-brand-gold-500/30 px-6 py-5 rounded-2xl shadow-2xl w-full mb-8 relative overflow-hidden"
+              className="bg-black/30 backdrop-blur-md border border-brand-gold-500/30 px-5 py-3.5 sm:px-6 sm:py-5 rounded-2xl shadow-2xl w-full mb-4 sm:mb-8 relative overflow-hidden"
             >
               {/* Corner gold highlights */}
               <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-brand-gold-400/60 rounded-tl-lg" />
@@ -277,13 +240,13 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
               <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-brand-gold-400/60 rounded-bl-lg" />
               <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-brand-gold-400/60 rounded-br-lg" />
 
-              <p className="text-[10px] uppercase tracking-widest text-brand-cream-50/70 font-medium mb-1.5">
+              <p className="text-[9px] sm:text-[10px] uppercase tracking-widest text-brand-cream-50/70 font-medium mb-1">
                 Kpd. Yth. Bapak/Ibu/Saudara/i:
               </p>
-              <h2 className="text-xl font-display font-semibold text-brand-gold-200 tracking-wide line-clamp-1 drop-shadow-sm">
+              <h2 className="text-lg sm:text-xl font-display font-semibold text-brand-gold-200 tracking-wide line-clamp-1 drop-shadow-sm">
                 {guestName}
               </h2>
-              <p className="text-[9px] text-brand-cream-50/50 mt-1.5 italic font-light">
+              <p className="text-[8px] sm:text-[9px] text-brand-cream-50/50 mt-1 italic font-light">
                 *Mohon maaf bila ada salah penulisan nama/gelar
               </p>
             </motion.div>
@@ -296,7 +259,7 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
               transition={{ delay: 2.7, duration: 0.8 }}
               whileHover={prefersReducedMotion ? {} : { scale: 1.04, boxShadow: "0 0 25px rgba(212,175,55,0.45)" }}
               whileTap={prefersReducedMotion ? {} : { scale: 0.94 }}
-              className="relative overflow-hidden flex items-center gap-3 bg-gradient-to-r from-brand-gold-600 to-brand-gold-800 hover:from-brand-gold-500 hover:to-brand-gold-700 text-brand-cream-50 font-medium px-8 py-4 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.3)] border border-brand-gold-400/40 cursor-pointer group transition-all duration-300"
+              className="relative overflow-hidden flex items-center gap-2.5 bg-gradient-to-r from-brand-gold-600 to-brand-gold-800 hover:from-brand-gold-500 hover:to-brand-gold-700 text-brand-cream-50 font-medium px-6 py-3.5 sm:px-8 sm:py-4 rounded-full shadow-[0_0_20px_rgba(212,175,55,0.3)] border border-brand-gold-400/40 cursor-pointer group transition-all duration-300"
             >
               <AnimatePresence>
                 {isOpening && (
@@ -309,8 +272,8 @@ export const CoverSection: React.FC<CoverSectionProps> = ({ onOpen, isOpen }) =>
                   />
                 )}
               </AnimatePresence>
-              <MailOpen size={18} className="group-hover:rotate-6 transition-transform duration-300 text-brand-cream-50" />
-              <span className="tracking-widest text-sm font-semibold uppercase">Buka Undangan</span>
+              <MailOpen size={16} className="group-hover:rotate-6 transition-transform duration-300 text-brand-cream-50" />
+              <span className="tracking-widest text-xs sm:text-sm font-semibold uppercase">Buka Undangan</span>
             </motion.button>
           </motion.div>
         </motion.div>
