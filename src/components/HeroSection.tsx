@@ -7,8 +7,8 @@ import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
 export const HeroSection: React.FC = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
 
-  const titleGroom = "Arman".split("");
-  const titleBride = "Dian".split("");
+  const titleGroom = ['A', 'r', 'm', 'a', 'n'];
+  const titleBride = ['D', 'i', 'a', 'n'];
 
   const handleScrollDown = () => {
     const element = document.getElementById('mempelai');
