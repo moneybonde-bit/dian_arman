@@ -59,7 +59,8 @@ export const FAMILIES: FamilyGroup[] = [
     title: 'Keluarga Besar Mempelai Pria',
     names: [
       'Kel. Kanaf-Baok',
-      'Kel. Neno - Nenoharan',
+      'Kel. Neno',
+      'Kel. Nenoharan',
       'Kel. Pdt. Noh Ruku',
       'Kel. Masriani Ruthi Tiara Lina Siregar'
     ]
