@@ -137,6 +137,24 @@ export const RsvpSection: React.FC = () => {
     let lastTime = performance.now();
     const speed = 25; // pixels per second
 
+    // On touch screens :hover never matches, so pause while the user is
+    // touching/scrolling the list to avoid fighting their finger.
+    let touchPaused = false;
+    let resumeTimeout: ReturnType<typeof setTimeout>;
+    const onTouchStart = () => {
+      touchPaused = true;
+      clearTimeout(resumeTimeout);
+    };
+    const onTouchEnd = () => {
+      clearTimeout(resumeTimeout);
+      resumeTimeout = setTimeout(() => {
+        touchPaused = false;
+      }, 2000);
+    };
+    container.addEventListener('touchstart', onTouchStart, { passive: true });
+    container.addEventListener('touchend', onTouchEnd, { passive: true });
+    container.addEventListener('touchcancel', onTouchEnd, { passive: true });
+
     const scroll = (currentTime: number) => {
       if (!scrollContainerRef.current) return;
       const el = scrollContainerRef.current;
@@ -145,7 +163,7 @@ export const RsvpSection: React.FC = () => {
       lastTime = currentTime;
 
       // If user is hovering or dragging, pause temporarily
-      if (!el.matches(':hover')) {
+      if (!el.matches(':hover') && !touchPaused) {
         el.scrollTop += speed * elapsed;
 
         // Wrap around smoothly if reached the bottom
@@ -160,7 +178,13 @@ export const RsvpSection: React.FC = () => {
     };
 
     animationFrameId = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animationFrameId);
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      clearTimeout(resumeTimeout);
+      container.removeEventListener('touchstart', onTouchStart);
+      container.removeEventListener('touchend', onTouchEnd);
+      container.removeEventListener('touchcancel', onTouchEnd);
+    };
   }, [isAutoScrolling, prefersReducedMotion, responses]);
 
   const handleSubmit = (e: React.FormEvent) => {

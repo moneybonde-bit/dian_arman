@@ -7,8 +7,10 @@ export const FloatingParticles: React.FC = () => {
   
   if (prefersReducedMotion) return null;
 
-  // Render a number of particles to simulate flying leaves/petals
-  const particles = Array.from({ length: 20 });
+  // Render a number of particles to simulate flying leaves/petals.
+  // Fewer particles on small screens keeps scrolling smooth on mobile GPUs.
+  const isSmallScreen = typeof window !== 'undefined' && window.innerWidth < 640;
+  const particles = Array.from({ length: isSmallScreen ? 10 : 20 });
 
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">

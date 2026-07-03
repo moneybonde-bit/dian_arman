@@ -46,11 +46,31 @@
 }
 
 @layer base {
+  html {
+    /* Prevent iOS/Android from inflating text on rotation */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   body {
     background-color: var(--color-brand-cream-50);
     color: var(--color-brand-burgundy-900);
     font-family: var(--font-sans);
     overflow-x: hidden;
+    /* Remove the grey/blue flash on tap for a cleaner mobile feel */
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button, a, input, select, textarea {
+    touch-action: manipulation;
+  }
+
+  input, select, textarea {
+    /* Keep form controls at >=16px effective size handled per-component;
+       avoid iOS zoom-jump when focusing fields */
+    font-size: max(16px, 1em);
   }
 }
 
@@ -67,6 +87,22 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-burgundy-500);
+}
+
+/* Slim scrollbar for inner scroll areas (e.g. Wishes Wall) */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-terracotta-400) var(--color-brand-cream-100);
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-brand-terracotta-400);
+  border-radius: 2px;
 }
 
 /* Metallic gold shining text effect */
@@ -125,6 +161,14 @@
 
 .animate-pulse-neon {
   animation: pulseNeon 3s ease-in-out infinite;
+}
+
+/* Honor the user's reduced-motion preference for decorative CSS animations */
+@media (prefers-reduced-motion: reduce) {
+  .metallic-shine,
+  .animate-pulse-neon {
+    animation: none;
+  }
 }
 
 

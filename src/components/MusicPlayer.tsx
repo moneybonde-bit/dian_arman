@@ -85,7 +85,7 @@ export const MusicPlayer = forwardRef<MusicPlayerHandle, MusicPlayerProps>(
     };
 
     return (
-      <div className="fixed top-4 right-4 z-40">
+      <div className="fixed top-[calc(1rem+env(safe-area-inset-top))] right-4 z-40">
         {/* Hidden YouTube Iframe to stream the requested song */}
         <iframe
           ref={iframeRef}
