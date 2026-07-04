@@ -12,7 +12,7 @@ interface TimeLeft {
 
 export const Countdown: React.FC = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const targetDate = new Date('2026-07-25T09:00:00');
+  const targetDate = new Date('2026-07-25T11:00:00+08:00');
 
   const calculateTimeLeft = (): TimeLeft => {
     const difference = +targetDate - +new Date();
