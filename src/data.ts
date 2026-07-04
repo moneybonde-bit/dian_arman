@@ -2,7 +2,6 @@ import { WeddingEvent, GalleryItem, FamilyGroup } from './types';
 
 export const HERO_IMAGES = [
   'https://lh3.googleusercontent.com/d/1VCRMYPDSz2NwoTZpHDWeqxxfXjBapM4_',
-  'https://storage.googleapis.com/aistudio-user-uploads/649922817876/97b489a2eb2a4f4e8abf2f3f7215359a/image.png'
 ];
 
 export const BRIDE_GROOM = {

@@ -158,10 +158,6 @@ export const GallerySection: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Subtle label on mobile */}
-                <div className="absolute bottom-2 left-2 right-2 bg-brand-burgundy-900/60 backdrop-blur-xs px-2 py-1 rounded text-[10px] text-brand-cream-50 font-medium truncate md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  {item.alt}
-                </div>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -230,31 +226,22 @@ export const GallerySection: React.FC = () => {
                   referrerPolicy="no-referrer"
                 />
 
-                {/* Left/Right Navigation Buttons (Visible and large on desktop, easily clickable) */}
+                {/* Left/Right Navigation Buttons */}
                 <button
                   onClick={navigatePrev}
-                  className="absolute left-2 md:-left-16 p-3 rounded-full bg-black/40 hover:bg-black/60 text-brand-cream-50 transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shadow-lg"
+                  className="absolute left-1 md:-left-16 p-3 rounded-full bg-black/55 hover:bg-black/75 text-brand-cream-50 transition-colors cursor-pointer min-h-[48px] min-w-[48px] flex items-center justify-center shadow-xl backdrop-blur-sm border border-white/10"
                 >
-                  <ChevronLeft size={24} />
+                  <ChevronLeft size={22} />
                 </button>
 
                 <button
                   onClick={navigateNext}
-                  className="absolute right-2 md:-right-16 p-3 rounded-full bg-black/40 hover:bg-black/60 text-brand-cream-50 transition-colors cursor-pointer min-h-[44px] min-w-[44px] flex items-center justify-center shadow-lg"
+                  className="absolute right-1 md:-right-16 p-3 rounded-full bg-black/55 hover:bg-black/75 text-brand-cream-50 transition-colors cursor-pointer min-h-[48px] min-w-[48px] flex items-center justify-center shadow-xl backdrop-blur-sm border border-white/10"
                 >
-                  <ChevronRight size={24} />
+                  <ChevronRight size={22} />
                 </button>
               </div>
 
-              {/* Bottom Image Caption */}
-              <div className="absolute bottom-0 inset-x-0 p-6 text-center bg-gradient-to-t from-black/60 to-transparent text-brand-cream-50">
-                <p className="text-sm font-medium tracking-wide">
-                  {filteredItems[activePhotoIndex].alt}
-                </p>
-                <p className="text-xs text-brand-gold-400/80 mt-1 italic">
-                  Gunakan tombol atau sentuh bagian sisi untuk bernavigasi
-                </p>
-              </div>
             </motion.div>
           )}
         </AnimatePresence>
