@@ -3,20 +3,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle, Users, MessageSquare, Send, CalendarCheck, Sparkles, Heart, Search, Play, Pause } from 'lucide-react';
 import { DiamondDivider, CornerOrnament, EthnicMandala } from './Ornament';
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion';
+import { useWishes, RsvpResponse } from '../hooks/useWishes';
 
-interface RsvpResponse {
-  id: string;
-  name: string;
-  attendance: 'hadir' | 'absen' | 'ragu';
-  guestCount: number;
-  message: string;
-  date: string;
-  reactions?: {
-    heart: number;
-    pray: number;
-    sparkle: number;
-  };
-}
 
 const QUICK_WISHES_PRESETS = [
   "Selamat menempuh hidup baru! Semoga cinta kalian abadi selamanya. ❤️",
@@ -71,7 +59,8 @@ export const RsvpSection: React.FC = () => {
   const [attendance, setAttendance] = useState<'hadir' | 'absen' | 'ragu'>('hadir');
   const [guestCount, setGuestCount] = useState<number>(1);
   const [message, setMessage] = useState('');
-  const [responses, setResponses] = useState<RsvpResponse[]>([]);
+  const { wishes: responses, loading, error, addWish, incrementReaction } = useWishes();
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -85,47 +74,7 @@ export const RsvpSection: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const initialOffset = prefersReducedMotion ? 0 : 25;
 
-  // Load and seed responses from localStorage
-  useEffect(() => {
-    const stored = localStorage.getItem('wedding_rsvp_responses');
-    if (stored) {
-      setResponses(JSON.parse(stored));
-    } else {
-      // Seed with some lovely realistic wishes matching the family circles
-      const seedData: RsvpResponse[] = [
-        {
-          id: 'seed-1',
-          name: 'Kel. Pdt. Noh Ruku',
-          attendance: 'hadir',
-          guestCount: 2,
-          message: 'Selamat berbahagia Arman dan Dian! Kiranya Tuhan selalu menuntun setiap langkah perjalanan keluarga baru ini menjadi berkat yang berkelimpahan untuk sesama.',
-          date: '28 Juni 2026, 18.23',
-          reactions: { heart: 8, pray: 12, sparkle: 5 }
-        },
-        {
-          id: 'seed-2',
-          name: 'Masriani Siregar',
-          attendance: 'hadir',
-          guestCount: 1,
-          message: 'Happy wedding Dian sayang! Turut bersukacita atas persatuan kudus ini. Tuhan Yesus memberkati pernikahan kalian berdua hingga maut memisahkan.',
-          date: '29 Juni 2026, 09.05',
-          reactions: { heart: 14, pray: 9, sparkle: 8 }
-        },
-        {
-          id: 'seed-3',
-          name: 'Yustus & Ruth (Sahabat Dian)',
-          attendance: 'hadir',
-          guestCount: 2,
-          message: 'Sangat terharu melihat perjalanan cinta kalian. Akhirnya bersatu di GKST Imanuel Parigi. Maaf belum bisa hadir langsung, doa kami menyertai dari jauh!',
-          date: '29 Juni 2026, 11.45',
-          reactions: { heart: 11, pray: 6, sparkle: 12 }
-        }
-      ];
-      localStorage.setItem('wedding_rsvp_responses', JSON.stringify(seedData));
-      setResponses(seedData);
-    }
-  }, []);
-
+  
   // Live Auto-Scroll Ticker Effect
   useEffect(() => {
     if (!isAutoScrolling || prefersReducedMotion) return;
@@ -187,56 +136,39 @@ export const RsvpSection: React.FC = () => {
     };
   }, [isAutoScrolling, prefersReducedMotion, responses]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
     setIsSubmitting(true);
+    setSubmitError(null);
 
     const now = new Date();
     const formattedDate = `${now.getDate()} ${getMonthName(now.getMonth())} ${now.getFullYear()}, ${String(now.getHours()).padStart(2, '0')}.${String(now.getMinutes()).padStart(2, '0')}`;
 
-    const newResponse: RsvpResponse = {
-      id: `rsvp-${Date.now()}`,
-      name: name.trim(),
-      attendance,
-      guestCount: attendance === 'hadir' ? guestCount : 0,
-      message: message.trim(),
-      date: formattedDate,
-      reactions: { heart: 0, pray: 0, sparkle: 0 }
-    };
-
-    setTimeout(() => {
-      const updated = [newResponse, ...responses];
-      localStorage.setItem('wedding_rsvp_responses', JSON.stringify(updated));
-      setResponses(updated);
+    try {
+      await addWish(
+        name.trim(),
+        attendance,
+        attendance === 'hadir' ? guestCount : 0,
+        message.trim(),
+        formattedDate
+      );
       
       setIsSubmitting(false);
       setShowSuccess(true);
-
-      // Clear form fields
       setName('');
       setMessage('');
       setGuestCount(1);
-    }, 1000);
+    } catch (err) {
+      console.error(err);
+      setSubmitError('Terjadi kesalahan saat mengirim doa/RSVP. Coba lagi.');
+      setIsSubmitting(false);
+    }
   };
 
   const handleReaction = (id: string, type: 'heart' | 'pray' | 'sparkle') => {
-    const updated = responses.map(rsvp => {
-      if (rsvp.id === id) {
-        const reactions = rsvp.reactions || { heart: 0, pray: 0, sparkle: 0 };
-        return {
-          ...rsvp,
-          reactions: {
-            ...reactions,
-            [type]: reactions[type] + 1
-          }
-        };
-      }
-      return rsvp;
-    });
-    setResponses(updated);
-    localStorage.setItem('wedding_rsvp_responses', JSON.stringify(updated));
+    incrementReaction(id, type).catch(console.error);
   };
 
   const getMonthName = (monthIdx: number) => {
@@ -485,6 +417,13 @@ export const RsvpSection: React.FC = () => {
                 </div>
               </div>
 
+              {/* Error Message */}
+              {submitError && (
+                <div className="bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-xs font-semibold">
+                  {submitError}
+                </div>
+              )}
+
               {/* Submit Button */}
               <button
                 type="submit"
@@ -654,7 +593,19 @@ export const RsvpSection: React.FC = () => {
                 })}
               </AnimatePresence>
 
-              {filteredResponses.length === 0 && (
+              {loading ? (
+                <div className="h-full flex flex-col items-center justify-center text-center py-20 text-brand-burgundy-950/40 space-y-3">
+                  <div className="animate-spin text-brand-terracotta-500">
+                    <Sparkles size={32} />
+                  </div>
+                  <p className="text-xs font-semibold animate-pulse">Memuat wishes...</p>
+                </div>
+              ) : error ? (
+                <div className="h-full flex flex-col items-center justify-center text-center py-20 text-brand-burgundy-950/40">
+                  <p className="text-xs font-semibold text-rose-600">Gagal memuat wishes.</p>
+                  <p className="text-[10px] opacity-70">Silakan periksa koneksi Anda.</p>
+                </div>
+              ) : filteredResponses.length === 0 && (
                 <div className="h-full flex flex-col items-center justify-center text-center py-20 text-brand-burgundy-950/40">
                   <EthnicMandala size={48} className="opacity-30 mb-3" />
                   <p className="text-xs font-semibold">Tidak ditemukan ucapan cocok.</p>
