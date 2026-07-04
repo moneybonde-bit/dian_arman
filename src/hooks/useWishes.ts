@@ -34,9 +34,7 @@ export function useWishes() {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    // Reference to the wishes subcollection for the specific event
     const wishesRef = collection(db, 'events', EVENT_ID, 'wishes');
-    // Order by createdAt descending and limit to 50
     const q = query(wishesRef, orderBy('createdAt', 'desc'), limit(50));
 
     const unsubscribe = onSnapshot(
