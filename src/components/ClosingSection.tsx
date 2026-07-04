@@ -207,7 +207,7 @@ export const ClosingSection: React.FC = () => {
 
                 {/* Traditional motif watermark bottom corner */}
                 <div className="text-[10px] font-semibold text-brand-burgundy-950/40 uppercase tracking-widest">
-                  Adat Nuance • Card {activeIdx + 1} of {cards.length}
+                  • Card {activeIdx + 1} of {cards.length}
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -249,7 +249,7 @@ export const ClosingSection: React.FC = () => {
           Arman & Dian • 25.07.2026
         </p>
 
-        {/* Luxavian Studio Copyright Footer */}
+        {/* Luxavian Digital Studio Copyright Footer */}
         <motion.div
           initial={{ opacity: 0, y: 8 }}
           whileInView={{ opacity: 0.40, y: 0 }}
@@ -260,12 +260,12 @@ export const ClosingSection: React.FC = () => {
         >
           <p className="text-[11px] font-sans tracking-[0.18em] uppercase text-brand-burgundy-950 font-bold">
             © <a 
-                href="https://luxavian-studio.vercel.app/"
+                href="https://luxavian.it.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-brand-gold-600 transition-all duration-300 hover:underline underline-offset-4 decoration-brand-gold-500"
               >
-                Luxavian Studio
+                Luxavian Digital Studio
               </a>
           </p>
         </motion.div>
