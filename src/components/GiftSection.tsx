@@ -12,8 +12,8 @@ export const GiftSection: React.FC = () => {
   const initialOffset = prefersReducedMotion ? 0 : 25;
 
   const account = {
-    bankName: 'Bank BCA',
-    accountNumber: '6495112234',
+    bankName: 'Bank BRI',
+    accountNumber: '4676 0105 6209 536',
     recipientName: 'Arman Kanaf',
   };
 
