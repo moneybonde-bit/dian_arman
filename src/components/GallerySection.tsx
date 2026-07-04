@@ -10,13 +10,15 @@ export const GallerySection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Semua');
   const [visibleCount, setVisibleCount] = useState<number>(8);
   const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
+  const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
 
   // Filter items by category
   const categories = ['Semua', 'Momen Bersama', 'Adat Bada', 'Adat Bali', 'Adat Timor Amarasi'];
   
-  const filteredItems = selectedCategory === 'Semua' 
+  const filteredItems = (selectedCategory === 'Semua' 
     ? GALLERY_ITEMS 
-    : GALLERY_ITEMS.filter(item => item.category === selectedCategory);
+    : GALLERY_ITEMS.filter(item => item.category === selectedCategory)
+  ).filter(item => !brokenImages.has(item.id));
 
   const displayedItems = filteredItems.slice(0, visibleCount);
   const hasMore = filteredItems.length > visibleCount;
@@ -149,6 +151,13 @@ export const GallerySection: React.FC = () => {
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 select-none"
                   loading="lazy"
                   referrerPolicy="no-referrer"
+                  onError={() => {
+                    setBrokenImages(prev => {
+                      const newSet = new Set(prev);
+                      newSet.add(item.id);
+                      return newSet;
+                    });
+                  }}
                 />
 
                 {/* Subtle Overlay on Hover */}
