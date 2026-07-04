@@ -13,7 +13,7 @@ export const GiftSection: React.FC = () => {
 
   const account = {
     bankName: 'Bank BRI',
-    accountNumber: '4676 0105 6209 536',
+    accountNumber: '467601056209536',
     recipientName: 'Arman Kanaf',
   };
 
