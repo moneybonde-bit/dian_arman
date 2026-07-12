@@ -187,7 +187,7 @@ export const RsvpSection: React.FC = () => {
 
   const filteredResponses = responses.filter(rsvp => 
     rsvp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    rsvp.message.toLowerCase().includes(searchTerm.toLowerCase())
+    (rsvp.message ?? '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -387,13 +387,13 @@ export const RsvpSection: React.FC = () => {
               {/* Wishes Message */}
               <div>
                 <label className="block text-[11px] uppercase tracking-wider font-semibold text-brand-burgundy-950/70 mb-1.5 flex justify-between items-center">
-                  <span>Ucapan & Doa Restu</span>
+                  <span>Ucapan & Doa Restu (opsional)</span>
                   <span className="text-[9px] font-bold text-brand-gold-600 uppercase tracking-widest">Wishes Wall</span>
                 </label>
                 <textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Berikan doa restu atau ucapan hangat Anda di sini..."
+                  placeholder="Opsional — tulis ucapan atau doa restu Anda di sini..."
                   rows={4}
                   className="w-full bg-brand-cream-100/50 border border-brand-gold-500/25 rounded-xl px-4 py-3 text-sm font-medium focus:outline-none focus:border-brand-terracotta-500 transition-colors placeholder-brand-burgundy-950/30 resize-none"
                 />
